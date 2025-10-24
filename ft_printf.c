@@ -1,19 +1,14 @@
 #include <stdarg.h>
 #include "libft.h"
 
-int	ft_imp(va_list vargs, const char *str, int i)
+int	ft_imp(va_list *vargs, const char *str, int *i)
 {
-	int	i:
-
 	if (str[0] == 'c')
-		write(1, &str[0], 1);
+		ft_printf_char(vargs, i);
 	else if (str[0] == 's')
-	{
-		i = ft_strlen(str);
-		write(1, str, i);
-	} 
+		ft_printf_str(vargs, i);
 	else if (str[0] == 'p')
-
+		ft_printf_hex(vargs, i);
 }
 
 int	ft_printf(char const *str, ...)
@@ -24,13 +19,15 @@ int	ft_printf(char const *str, ...)
 
 	i = 0;
 	len = 0;
+	if (!str)
+		return 0;
 	va_start(vargs, str);
 	while (str[i])
 	{
 		if (str[i] == '%')
 		{
-			len += ft_imp(vargs, str + i + 1, i);
 			i++;
+			ft_imp(&vargs, str + i, &len);
 		}
 		else
 		{
@@ -40,7 +37,7 @@ int	ft_printf(char const *str, ...)
 		i++;
 	}
 	va_end(vargs);
-	return (len(;
+	return (len);
 }
 
 /*
