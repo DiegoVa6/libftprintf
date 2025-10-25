@@ -10,55 +10,50 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_dechex(unsigned int p, char *base, int len)
+#include "ft_printf.h"
+
+static void	puthex_rec(unsigned int n, char const *base, int *i)
 {
-	int	i;
-	int	j;
-
-	if (p != 0)
-	{
-		i = p / 16;
-		j = p % 16;
-		ft_dechex(i, base);
-		write(1, &base[j], 1);
-		(*len) += 1;
-	}
-
+	if (n >= 16)
+		puthex_rec(n / 16, base, i);
+	ft_printf_char(base[n % 16], i);
 }
 
-void	ft_printf_hp(void *value, int *i)
+static void	puthex_ul(unsigned long n, char const *base, int *i)
 {
-	unsigned long	*p;
-	char	*base;
+	if (n >= 16)
+		puthex_ul(n / 16, base, i);
+	ft_printf_char(base[n % 16], i);
+}
 
-	p = (unsigned long) value;
-	if (!p)
+void	ft_printf_hex(unsigned int n, int *i, int upper)
+{
+	char const	*base;
+
+	if (upper)
+		base = "0123456789ABCDEF";
+	else
+		base = "0123456789abcdef";
+	if (n == 0)
+	{
+		ft_printf_char('0', i);
 		return ;
+	}
+	puthex_rec(n, base, i);
+}
+
+void	ft_printf_ptr(void *ptr, int *i)
+{
+	unsigned long	v;
+
+	if (ptr == NULL)
+	{
+		write(1, "(nil)", 5);
+		(*i) += 5;
+		return ;
+	}
+	v = (unsigned long)ptr;
 	write(1, "0x", 2);
 	(*i) += 2;
-	if (p == 0)
-        {
-                write(1, "0", 1);
-                (*i) += 1;
-                return ;
-        }
-	base = "0123456789abcdef";
-	ft_dechex(p, base, i);
-}
-
-void	ft_printf_hex(unsigned int p, int *i, int m)
-{
-	char	*base;
-
-	if (p == 0)
-	{
-		write(1, "0", 1);
-		(*i) += 1;
-		return ;
-	}
-	if (m == 0)
-		base = "0123456789abcdef";
-	else
-		base = "0123456789ABCDEF";
-	ft_dechex(p, base, i);
+	puthex_ul(v, "0123456789abcdef", i);
 }

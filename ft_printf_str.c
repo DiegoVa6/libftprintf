@@ -10,10 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
+
 void	ft_printf_char(char c, int *i)
 {
 	write(1, &c, 1);
-	*i += 1;
+	(*i)++;
 }
 
 void	ft_printf_str(char *s, int *i)
@@ -22,38 +24,38 @@ void	ft_printf_str(char *s, int *i)
 
 	j = 0;
 	if (!s)
+	{
+		write(1, "(null)", 6);
+		(*i) += 6;
 		return ;
+	}
 	while (s[j])
 	{
 		write(1, &s[j], 1);
 		j++;
-		*i += 1;
+		(*i)++;
 	}
 }
 
-static void     putnbr_t(int n, int *i)
+static void	putnbr_rec(unsigned int n, int *i)
 {
-        if (n > 9)
-        {
-                putnbr_t(n / 10, i);
-                putnbr_t(n % 10, i);
-        }
-        else
-		ft_printf_char(c + '0', i);
+	if (n > 9)
+		putnbr_rec(n / 10, i);
+	ft_printf_char((char)('0' + (n % 10)), i);
 }
 
-void    ft_putnbr_pf(int n, int *i)
+void	ft_putnbr_pf(int n, int *i)
 {
-        if (n == -2147483648)
-        {
-                ft_printf_str("-2147483648", i);
-                return ;
-        }
-        if (n < 0)
-        {
-                write(1, '-', 1);
-                *i += 1;
-                n *= -1;
-        }
-        putnbr_t(n, i);
+	if (n < 0)
+	{
+		ft_printf_char('-', i);
+		putnbr_rec((unsigned int)(-(long)n), i);
+	}
+	else
+		putnbr_rec((unsigned int)n, i);
+}
+
+void	ft_putunbr_pf(unsigned int n, int *i)
+{
+	putnbr_rec(n, i);
 }
