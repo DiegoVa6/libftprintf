@@ -6,7 +6,7 @@
 /*   By: dvallada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 12:47:44 by dvallada          #+#    #+#             */
-/*   Updated: 2025/10/24 19:55:55 by dvallada         ###   ########.fr       */
+/*   Updated: 2025/10/25 16:49:38 by dvallada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_printf(char const *str, ...)
 	i = 0;
 	len = 0;
 	if (!str)
-		return (0);
+		return (-1);
 	va_start(vargs, str);
 	while (str[i])
 	{
