@@ -14,7 +14,7 @@ NAME	= libftprintf.a
 CFLAGS	= -Wall -Wextra -Werror
 AR	= ar rcs
 
-SRCS	= ft_printf.c ft_printf_str.c ft_printf_hex.c
+SRCS	= src/ft_printf.c src/ft_printf_str.c src/ft_printf_hex.c
 OBJS	= $(SRCS:.c=.o)
 
 all: $(NAME)
@@ -22,8 +22,8 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(AR) $(NAME) $(OBJS)
 
-%.o: %.c ft_printf.h
-	cc $(CFLAGS) -c $< -o $@
+src/%.o: src/%.c include/ft_printf.h
+	cc $(CFLAGS) -Iinclude  -c $< -o $@
 
 clean:
 	rm -f $(OBJS)
