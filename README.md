@@ -74,6 +74,7 @@ Recompile everything:
 make re
 ```
 
+
 🧪 Testing (Optional)
 
 32 does not require official tests for this project,
@@ -95,6 +96,7 @@ cc tests/main.c -L. -lftprintf -Iinclude -o test_printf
 ```
 
 Compare results with the original printf to validate correctness.
+
 
 📚 Implemented Functionalities
 **Core printing functions**
