@@ -77,7 +77,7 @@ make re
 
 🧪 Testing (Optional)
 
-32 does not require official tests for this project,
+42 does not require official tests for this project,
 but you can create simple tests such as:
 ```text
 #include "ft_printf.h"
